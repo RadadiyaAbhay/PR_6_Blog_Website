@@ -1,0 +1,61 @@
+<%- include('header')%>
+
+    <body>
+        <div class="container-scroller">
+            <%- include('navbar')%>
+
+                <!-- partial -->
+                <div class="container-fluid page-body-wrapper">
+                    <!-- partial:partials/_sidebar.html -->
+                    <%- include('sidebar')%>
+
+                        <!-- partial -->
+                        <div class="main-panel">
+                            <div class="content-wrapper">
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Add Blog</h4>
+                                            <p class="card-description">Enter Blog Details</p>
+                                            <form class="forms-sample" action="/edituser" method="post" enctype="multipart/form-data">
+                                                
+                                                <div class="form-group">
+                                                    <label for="exampleInputName1">Name</label>
+                                                    <input type="text" name="name" class="form-control"
+                                                        id="exampleInputName1" value="<%= admin.name %>" placeholder="Name" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail3">Email</label>
+                                                    <input type="email" class="form-control" value="<%= admin.email %>" disabled required name="email"
+                                                        id="exampleInputEmail3" placeholder="Email" >
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail4">Designation</label>
+                                                    <input type="text" class="form-control" value="<%= admin.designation %>" name="designation"
+                                                        id="exampleInputEmail4" placeholder="Designation">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleTextarea1">Bio</label>
+                                                    <textarea class="form-control" name="bio"
+                                                        id="exampleTextarea1" rows="4"><%= admin.bio %></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Profile Images</label>
+                                                    <div class="input-group col-xs-12">
+                                                        <input type="file" name="profile"
+                                                            class="form-control file-upload-info"
+                                                            placeholder="Upload Image">
+                                                    </div>
+                                                </div>
+
+
+                                                <button type="submit"
+                                                    class="btn btn-gradient-primary me-2">Submit</button>
+                                                <a href="/" class="btn btn-light">Cancel</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%- include('footer')%>

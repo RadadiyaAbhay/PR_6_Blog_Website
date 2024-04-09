@@ -1,0 +1,36 @@
+<%- include('headeredit')%>
+
+    <body>
+        <div class="container-scroller">
+            <%- include('navbaredit')%>
+
+                <!-- partial -->
+                <div class="container-fluid page-body-wrapper">
+                    <!-- partial:partials/_sidebar.html -->
+                    <%- include('sidebaredit')%>
+
+                        <!-- partial -->
+                        <div class="main-panel">
+                            <div class="content-wrapper">
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Edit Category</h4>
+                                            <p class="card-description">Update Category Details</p>
+                                            <form class="forms-sample" action="/updatecategory" method="post">
+                                                <div class="form-group">
+                                                    <input type="text" name="id" value="<%= category.id %>" hidden>
+                                                    <label for="exampleInputName1">Category</label>
+                                                    <input type="text" name="title" value="<%= category.title %>"
+                                                        class="form-control" id="exampleInputName1"
+                                                        placeholder="Enter Category" required>
+                                                </div>
+                                                <button type="submit"
+                                                    class="btn btn-gradient-primary me-2">Submit</button>
+                                                <a href="/" class="btn btn-light">Cancel</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%- include('footer')%>

@@ -1,0 +1,61 @@
+<%- include('header')%>
+
+    <body>
+        <div class="container-scroller">
+            <%- include('navbar')%>
+
+                <!-- partial -->
+                <div class="container-fluid page-body-wrapper">
+                    <!-- partial:partials/_sidebar.html -->
+                    <%- include('sidebar')%>
+
+                        <!-- partial -->
+                        <div class="main-panel">
+                            <div class="content-wrapper">
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Add Category</h4>
+                                            <p class="card-description">Enter Category Details</p>
+                                            <form class="forms-sample" action="/insertcategory" method="post">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName1">Category</label>
+                                                    <input type="text" name="title" class="form-control"
+                                                        id="exampleInputName1" placeholder="Category" required>
+                                                </div>
+                                                <button type="submit"
+                                                    class="btn btn-gradient-primary me-2">Submit</button>
+                                                <a href="/" class="btn btn-light">Cancel</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Add Sub Category</h4>
+                                            <p class="card-description">Enter Sub Category Details</p>
+                                            <form class="forms-sample" action="/insertsubcategory" method="post">
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail3">Category</label>
+                                                        <select name="categoryId" id="exampleInputEmail3" class="form-control py-3 text-black" required>
+                                                            <option value="-1">--- select category ---</option>
+                                                            <% category.map((cate) =>{%>
+                                                                <option value="<%= cate.id%>"><%= cate.title%></option>
+                                                            <%})%>
+                                                        </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputName1">Sub Category</label>
+                                                    <input type="text" name="title" class="form-control"
+                                                        id="exampleInputName1" placeholder="Sub Category" required>
+                                                </div>
+                                                <button type="submit"
+                                                    class="btn btn-gradient-primary me-2">Submit</button>
+                                                <a href="/" class="btn btn-light">Cancel</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%- include('footer')%>

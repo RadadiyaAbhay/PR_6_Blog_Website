@@ -1,0 +1,90 @@
+<%- include('header')%>
+
+    <body>
+        <div class="container-scroller">
+            <%- include('navbar')%>
+
+                <!-- partial -->
+                <div class="container-fluid page-body-wrapper">
+                    <!-- partial:partials/_sidebar.html -->
+                    <%- include('sidebar')%>
+
+                        <!-- partial -->
+                        <div class="main-panel">
+                            <div class="content-wrapper">
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h4 class="card-title">Add Blog</h4>
+                                            <p class="card-description">Enter Blog Details</p>
+                                            <form class="forms-sample" action="/addblog" method="post"
+                                                enctype="multipart/form-data">
+                                                <div class="form-group">
+                                                    <label for="exampleInputName1">Title</label>
+                                                    <input type="text" name="title" class="form-control"
+                                                        id="exampleInputName1" placeholder="Title" required>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail3">Category</label>
+                                                    <!-- <input type="text" class="form-control" required name="category"
+                                                        id="exampleInputEmail3" placeholder="Category"> -->
+                                                        <select name="category" id="exampleInputEmail3" class="form-control py-3 text-black" onchange="handledropdown()" required>
+                                                            <option value="-1">--- select category ---</option>
+                                                            <% category.map((cate) =>{%>
+                                                                <option value="<%= cate.id%>"><%= cate.title%></option>
+                                                            <%})%>
+                                                        </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail7">Sub Category</label>
+                                                    <!-- <input type="text" class="form-control" required name="category"
+                                                        id="exampleInputEmail3" placeholder="Category"> -->
+                                                        <select name="subcategory" id="exampleInputEmail7" class="form-control py-3 text-black" disabled required>
+                                                            <option value="-1">--- select category ---</option>
+                                                            <% subcategory.map((cate) =>{%>
+                                                                <option value="<%= cate.id%>"><%= cate.title%></option>
+                                                            <%})%>
+                                                        </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleInputEmail4">Description</label>
+                                                    <input type="text" class="form-control" required name="description"
+                                                        id="exampleInputEmail4" placeholder="Description">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="exampleTextarea1">Content</label>
+                                                    <textarea class="form-control" required name="content"
+                                                        id="exampleTextarea1" rows="4"></textarea>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label>Blog Images</label>
+                                                    <div class="input-group col-xs-12">
+                                                        <input type="file" name="images" multiple
+                                                            class="form-control file-upload-info"
+                                                            placeholder="Upload Image" required>
+                                                    </div>
+                                                </div>
+
+
+                                                <button type="submit"
+                                                    class="btn btn-gradient-primary me-2">Submit</button>
+                                                <a href="/" class="btn btn-light">Cancel</a>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <script>
+                                const handledropdown = () =>{
+                                    const firstDropdown = document.getElementById('exampleInputEmail3');
+                                    const secondDropdown = document.getElementById('exampleInputEmail7');
+
+                                    if(firstDropdown.value == '-1' ){
+                                        secondDropdown.disabled = true;
+                                    }else{
+                                        secondDropdown.disabled = false;
+                                    }
+                                }
+                            </script>
+                            <%- include('footer')%>

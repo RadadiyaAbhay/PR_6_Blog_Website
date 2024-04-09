@@ -1,0 +1,53 @@
+<%- include('header')%>
+
+    <body>
+        <div class="container-scroller">
+            <%- include('navbar')%>
+
+                <!-- partial -->
+                <div class="container-fluid page-body-wrapper">
+                    <!-- partial:partials/_sidebar.html -->
+                    <%- include('sidebar')%>
+
+                        <!-- partial -->
+                        <div class="main-panel">
+                            <div class="content-wrapper">
+                                <div class="col-12 grid-margin stretch-card">
+                                    <div class="card">
+                                        <div class="card-body d-flex flex-wrap">
+                                            
+                                            <% blog.map((data)=>{ %>
+                                                <div class="p-2 col-xl-4 col-sm-6 col-12">
+                                                    <div class="card col-12 action_body border-3 border border-secondary-subtle ">
+                                                        <div class="col-12 overflow-hidden rounded align-items-center d-flex justify-content-center "
+                                                            style="height: 200px;">
+                                                            <img src="<%= data.images[0] %>" class=" card-img-top"
+                                                                alt="...">
+                                                        </div>
+                                                        <div class="card-body p-4 d-flex" style="background-color:rgb(242,237,243);">
+                                                            <div class="col-9">
+                                                                <h5 class="card-title text-truncate">
+                                                                    <%= data.title %>
+                                                                </h5>
+                                                                <p class="card-text mb-0 text-break text-truncate"><%= data.description%></p>
+                                                            </div>
+                                                            <div class="d-flex col-3 align-items-center">
+                                                                <div class="col-6 pe-1 ps-2">
+                                                                    <a href="/edit/<%= data.id %>" class="col-12"><i class="mdi mdi-pencil fs-4 text-success"></i></a>
+                                                                </div>
+                                                                <div class="col-6 px-1">
+                                                                    <a href="/deletepost/<%= data.id %>" class="col-12"><i class="mdi mdi-delete fs-4 text-danger "></i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <%})%>
+                                                <% if(blog.length == 0 ){%>
+                                                    <p class="d-flex justify-content-center col-12 fs-5">No Post Found</p>
+                                                <%}%>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <%- include('footer')%>
