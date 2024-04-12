@@ -3,14 +3,16 @@ const routes = express.Router();
 const adminController = require('./../controllers/admin.controller')
 const blogController = require('./../controllers/blog.controller')
 const categoryController = require('./../controllers/category.controller')
-const upload = require('./../middlewares/multer')
+const upload = require('./../middlewares/multer');
+const passport = require('../middlewares/auth');
+
 
 routes.get('/', adminController.defaultRoute)
 routes.get('/signin', adminController.signIn)
 routes.get('/signup', adminController.signUp)
 routes.post('/register', adminController.register)
 routes.get('/logout', adminController.logout)
-routes.post('/login', adminController.login)
+routes.post('/login', passport.authenticate('local',{ failureRedirect:'/signin'}), adminController.login);
 
 
 routes.get('/profile', adminController.profile)

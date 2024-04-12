@@ -7,6 +7,7 @@ const port = 3000;
 const routes = require('./routes/index');
 let session = require('express-session');
 let flash = require('connect-flash');
+const passport = require('./middlewares/auth');
 
 app.set('view engine', 'ejs')
 app.use(bodyParser.json());
@@ -17,7 +18,9 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: { secure: true }
-}))
+}));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 app.use('/', routes)
 app.use(express.static('public'))

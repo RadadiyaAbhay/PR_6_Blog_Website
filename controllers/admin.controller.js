@@ -7,15 +7,15 @@ let msg = "";
 var admin;
 const defaultRoute = async (req, res) => {
 
-    const { setId } = req.cookies;
+    // const { setId } = req.cookies;
 
-    if (setId) {
-        admin = await adminModel.findById(setId);
-        console.log(req.flash('success'));
-        res.render('index', { admin, messages: msg });
-    } else {
-        res.redirect('/signin')
-    }
+    // if (setId) {
+    //     admin = await adminModel.findById(setId);
+    //     console.log(req.flash('success'));
+        res.render('index', { admin : null, messages: "" });
+    // } else {
+    //     res.redirect('/signin')
+    // }
 }
 const signIn = (req, res) => {
     res.render('signin', { messages: "" });
@@ -47,35 +47,37 @@ const register = async (req, res) => {
 }
 
 const login = (req, res) => {
-    const { email, password } = req.body;
+    // const { email, password } = req.body;
 
-    try {
-        adminModel.findOne({ email }).then((data) => {
-            if (data != null) {
-                bcrypt.compare(password, data.password, (err, result) => {
-                    if (result) {
-                        res.cookie('setId', data.id);
-                        req.flash('success', 'You Login Successfully');
-                        msg = req.flash('success');
-                        console.log("login Successfully");
-                        res.redirect('/')
-                    } else {
-                        res.redirect('/signin')
-                    }
-                });
-            } else {
-                console.log("user not found");
-                res.redirect('/signup')
+    // try {
+    //     adminModel.findOne({ email }).then((data) => {
+    //         if (data != null) {
+    //             bcrypt.compare(password, data.password, (err, result) => {
+    //                 if (result) {
+    //                     res.cookie('setId', data.id);
+    //                     req.flash('success', 'You Login Successfully');
+    //                     msg = req.flash('success');
+    //                     console.log("login Successfully");
+    //                     res.redirect('/')
+    //                 } else {
+    //                     res.redirect('/signin')
+    //                 }
+    //             });
+    //         } else {
+    //             console.log("user not found");
+    //             res.redirect('/signup')
 
-            }
-        }).catch((err) => {
-            console.log(err);
-        })
+    //         }
+    //     }).catch((err) => {
+    //         console.log(err);
+    //     })
 
-    } catch (err) {
-        console.log(err);
-        res.redirect('/signin')
-    }
+    // } catch (err) {
+    //     console.log(err);
+    //     res.redirect('/signin')
+    // }
+    res.redirect('/'); 
+
 }
 
 const logout = (req, res) => {
