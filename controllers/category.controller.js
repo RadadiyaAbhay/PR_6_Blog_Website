@@ -4,19 +4,19 @@ const subcategoryModel = require('./../models/subcategory.model');
 let admin;
 
 const viewcategory = async (req, res) => {
-    const { setId } = req.cookies;
+    const admin = req.user;
 
     let category = await categoryModel.find({});
     let subcategory = await subcategoryModel.find({});
-    admin = await adminModel.findById(setId);
+    
 
 
     res.render('viewcategory' ,{category ,subcategory ,admin});
 }
 
 const addcategory = async (req, res) => {
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
+    
     let category = await categoryModel.find({});
     res.render('addcategory', { admin, category });
 }
@@ -55,16 +55,16 @@ const deletesubcategory = async (req , res) =>{
 }
 const editcategory = async (req ,res) =>{
     const { id } = req.params;
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
+    
     let category = await categoryModel.findOne({_id : id});
     res.render('editcategory', {admin , category});  
 
 }
 const editsubcategory = async (req ,res) =>{
     const { id } = req.params;
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
+    
     let subcategory = await subcategoryModel.findOne({_id : id});
     res.render('editsubcategory', {admin , subcategory});  
 }

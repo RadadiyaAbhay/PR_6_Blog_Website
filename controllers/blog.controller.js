@@ -7,10 +7,10 @@ const fs = require('fs')
 
 var admin;
 const blogadd = async (req, res) => {
-    const { setId } = req.cookies;
+    const admin = req.user;
     
-    if (setId) {
-        admin = await adminModel.findById(setId);
+    if (admin) {
+        
         let category = await categoryModel.find({});
         let subcategory = await subcategoryModel.find({});
         // localStorage.setItem('categoryId', JSON.stringify(subcategory));
@@ -21,8 +21,8 @@ const blogadd = async (req, res) => {
 }
 const viewallpost = async (req, res) => {
     let blogs = await blogModel.find();
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
+    
     let newData = [];
     for (let index = 0; index < blogs.length; index++) {
         const blog = blogs[index];
@@ -39,16 +39,16 @@ const viewallpost = async (req, res) => {
     res.render('viewallpost', { admin, newData });
 }
 const viewuserpost = async (req, res) => {
-    const { setId } = req.cookies;
-    let blog = await blogModel.find({ userId: setId });
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
+    let blog = await blogModel.find({ userId: admin.id });
+    
     res.render('viewuserpost', { admin, blog });
 }
 
 const addBlog = async (req, res) => {
     const { title, content, category, description, subcategory } = req.body;
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
+    
     const images = [];
     req.files.forEach(element => {
         images.push(element.filename);
@@ -87,8 +87,8 @@ const edit = async (req, res) => {
     const blog = await blogModel.findOne({ _id: id })
     let category = await categoryModel.find({});
     let subcategory = await subcategoryModel.find({});
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
+    
     res.render("edit", { admin, blog, category, subcategory });
 }
 const editBlog = async (req, res) => {

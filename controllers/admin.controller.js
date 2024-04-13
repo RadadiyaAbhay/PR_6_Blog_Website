@@ -6,16 +6,14 @@ let msg = "";
 
 var admin;
 const defaultRoute = async (req, res) => {
+    console.log(req.user);
+    const admin = req.user;
 
-    // const { setId } = req.cookies;
-
-    // if (setId) {
-    //     admin = await adminModel.findById(setId);
-    //     console.log(req.flash('success'));
-        res.render('index', { admin : null, messages: "" });
-    // } else {
-    //     res.redirect('/signin')
-    // }
+    if (admin) {
+        res.render('index', { admin, messages: "" });
+    } else {
+        res.redirect('/signin')
+    }
 }
 const signIn = (req, res) => {
     res.render('signin', { messages: "" });
@@ -76,19 +74,22 @@ const login = (req, res) => {
     //     console.log(err);
     //     res.redirect('/signin')
     // }
-    res.redirect('/'); 
+    res.redirect('/');
 
 }
 
 const logout = (req, res) => {
-    res.clearCookie('setId');
-    res.redirect('/signin');
+    // res.clearCookie('connect.sid');
+    req.logout((err) => {
+        if (err) { res.redirect('/') };
+        res.redirect('/signin');
+    });
+    // res.redirect('/signin');
 }
 const profile = async (req, res) => {
-    const { setId } = req.cookies;
+    const admin = req.user;
 
-    if (setId) {
-        admin = await adminModel.findById(setId);
+    if (admin) {
         res.render('profile', { admin });
     } else {
         res.redirect('/signin')
@@ -96,23 +97,21 @@ const profile = async (req, res) => {
 }
 
 const profileedit = async (req, res) => {
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
-
+    const admin = req.user;
     res.render('profileedit', { admin });
 
 }
 const edituser = async (req, res) => {
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
     const { name, email, bio, designation } = req.body;
     const profile = req.file == null ? admin.profile : req.file.filename;
     if (req.file != null) {
+        console.log("admin", admin);
         if (admin.profile != "user.png") {
             fs.unlinkSync(`./uploads/${admin.profile}`)
         }
     }
-    await adminModel.findByIdAndUpdate(setId, {
+    await adminModel.findByIdAndUpdate(admin.id, {
         name,
         email,
         designation,
@@ -126,20 +125,18 @@ const edituser = async (req, res) => {
 }
 
 const changepassword = async (req, res) => {
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
     res.render('changepassword', { admin })
 }
 const passwordupdate = async (req, res) => {
     const { opassword, npassword, cpassword } = req.body;
-    const { setId } = req.cookies;
-    admin = await adminModel.findById(setId);
+    const admin = req.user;
     bcrypt.compare(opassword, admin.password, async (err, result) => {
         if (result) {
             if (npassword == cpassword) {
                 const saltRounds = 11;
                 bcrypt.hash(npassword, saltRounds, async (err, hash) => {
-                    await adminModel.findByIdAndUpdate(setId, { password: hash });
+                    await adminModel.findByIdAndUpdate(admin.id, { password: hash });
                     res.redirect('/logout');
                 });
             } else {
