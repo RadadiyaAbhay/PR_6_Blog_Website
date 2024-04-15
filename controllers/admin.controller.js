@@ -3,6 +3,8 @@ const fs = require('fs');
 const bcrypt = require('bcrypt');
 const flash = require('connect-flash');
 let msg = "";
+const otpGenerator = require('otp-generator')
+
 
 var admin;
 const defaultRoute = async (req, res) => {
@@ -147,5 +149,56 @@ const passwordupdate = async (req, res) => {
         }
     });
 }
-module.exports = { signIn, signUp, register, login, defaultRoute, passwordupdate, logout, profile, profileedit, edituser, changepassword };
+
+const forgetpass = async (req, res) => {
+    res.render('forgetpass');
+}
+const sendotp = async (req, res) => {
+    res.render('sendotp');
+}
+const resetpass = async (req, res) => {
+    res.render('resetpass');
+}
+const finduser = async (req, res) => {
+    let { email } = req.body;
+    adminModel.findOne({ email }).then((user) => {
+        if (user != null) {
+            let otp = otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false, lowerCaseAlphabets: false });
+            res.cookie('otp', otp);
+            res.cookie('id', user.id);
+            res.redirect('/sendotp')
+        } else {
+            res.redirect('/forgetpass')
+        }
+    }).catch((err) => {
+        res.redirect('/forgetpass' ,err)
+    })
+}
+const otpvalidation = async (req, res) => {
+    let userOtp = req.body.otp;
+    let { otp } = req.cookies;
+
+    if (otp == userOtp) {
+        res.redirect('/resetpass')
+    } else {
+        res.redirect('/forgetpass')
+    }
+}
+const getresetpass = async (req, res) => {
+    let { newpass, conpass } = req.body;
+    if (newpass === conpass) {
+        const {id} = req.cookies;
+        const saltRounds = 11;
+        bcrypt.hash(newpass, saltRounds, async (err, hash) => {
+            await adminModel.findByIdAndUpdate(id, { password: hash });
+            res.clearCookie('id');
+            res.clearCookie('otp');
+            res.redirect('/signin');
+        });
+    } else {
+        res.redirect('/resetpass')
+
+    }
+}
+module.exports = { signIn, signUp, register, login, defaultRoute, passwordupdate, logout, profile, profileedit, edituser, changepassword, forgetpass, sendotp, resetpass, finduser, otpvalidation, getresetpass };
 

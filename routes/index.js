@@ -23,6 +23,13 @@ routes.get('/changepassword',authMiddle, adminController.changepassword)
 routes.post('/passwordupdate', adminController.passwordupdate)
 routes.post('/edituser', upload.single('profile') , adminController.edituser)
 
+routes.get('/forgetpass' , adminController.forgetpass);
+routes.get('/sendotp' , adminController.sendotp);
+routes.get('/resetpass' , adminController.resetpass);
+routes.post('/finduser' , adminController.finduser);
+routes.post('/otpvalidation' , adminController.otpvalidation);
+routes.post('/getresetpass' , adminController.getresetpass);
+
 
 routes.get('/blogadd',authMiddle, blogController.blogadd)
 routes.get('/viewallpost',authMiddle, blogController.viewallpost)
