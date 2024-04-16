@@ -24,8 +24,9 @@ routes.post('/passwordupdate', adminController.passwordupdate)
 routes.post('/edituser', upload.single('profile') , adminController.edituser)
 
 routes.get('/forgetpass' , adminController.forgetpass);
-routes.get('/sendotp' , adminController.sendotp);
-routes.get('/resetpass' , adminController.resetpass);
+routes.get('/sendotp/:id' , adminController.sendotp);
+routes.get('/email' , adminController.email);
+routes.get('/resetpass/:id' , adminController.resetpass);
 routes.post('/finduser' , adminController.finduser);
 routes.post('/otpvalidation' , adminController.otpvalidation);
 routes.post('/getresetpass' , adminController.getresetpass);

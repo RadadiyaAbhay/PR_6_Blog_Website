@@ -27,6 +27,11 @@ const adminSchema = new mongoose.Schema({
         type: String,
         required: false,
         default : 'user.png'
+    },
+    otp:{
+        type: Number, 
+        required:false,
+        default :''
     }
 
 }, { timestamps: true });

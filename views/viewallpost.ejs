@@ -41,7 +41,7 @@
                                                                 </div>
                                                             </div>
                                                             <% let date = new Date(data.blog.createdAt) %>
-                                                            <p class="mb-0 text-break text-truncate mt-2"><%= date.getFullYear()%> - <%= date.getMonth() +1 < 10 ? '0'+(date.getMonth() +1) : date.getMonth()  %> - <%= date.getDay() < 10 ? '0'+(date.getDay()) : date.getDay()%></p>
+                                                            <p class="mb-0 text-break text-truncate mt-2"><%= date.getFullYear()%> - <%= date.getMonth() +1 < 10 ? '0'+(date.getMonth() +1) : date.getMonth()  %> - <%= date.getDate() < 10 ? '0'+(date.getDate()) : date.getDate()%></p>
                                                             
                                                         </div>
                                                     </div>
